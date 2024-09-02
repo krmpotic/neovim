@@ -1987,7 +1987,7 @@ static bool do_user_initialization(void)
 
   // init.lua
   if (os_path_exists(init_lua_path)
-      && do_source(init_lua_path, true, DOSO_VIMRC, NULL)) {
+        && do_source(init_lua_path, true, DOSO_VIMRC, NULL) != FAIL) {
     if (os_path_exists(user_vimrc)) {
       semsg(_("E5422: Conflicting configs: \"%s\" \"%s\""), init_lua_path,
             user_vimrc);
@@ -2093,7 +2093,7 @@ static void source_startup_scripts(const mparm_T *const parmp)
         || strequal(parmp->use_vimrc, "NORC")) {
       // Do nothing.
     } else {
-      if (do_source(parmp->use_vimrc, false, DOSO_NONE, NULL) != OK) {
+      if (do_source(parmp->use_vimrc, false, DOSO_NONE, NULL) == FAIL) {
         semsg(_("E282: Cannot read from \"%s\""), parmp->use_vimrc);
       }
     }
